@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 // import {Button } from '@radix-ui/react-button'
 
 const Navbar = () => {
-    const user=false;
+    const user=true;
   return (
     <div className='bg-white'>
         <div className='flex items-center justify-between h-16 mx-auto max-w-7xl '>
@@ -19,9 +19,10 @@ const Navbar = () => {
             </div>
             <div className="flex items-center gap-5">
                 <ul className="flex items-center gap-8 ml-15 font-meduim">
-                    <li>Home</li>
-                    <li>Jobs</li>
-                    <li>Browser</li>
+                    <li><Link to='/'>Home</Link></li>
+                    <li><Link to='/jobs'>Jobs</Link></li>
+                    <li><Link to='/browse'>Browse</Link></li>
+                   
                 </ul> 
                 {
                     !user?

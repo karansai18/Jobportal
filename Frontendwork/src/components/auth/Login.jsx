@@ -5,11 +5,14 @@ import { Input } from '../ui/input'
 import { RadioGroup } from '@radix-ui/react-radio-group'
 import {RadioGroupItem} from '@radix-ui/react-radio-group'
 import { Button } from '../ui/button';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import axios from 'axios'; 
+import { toast } from 'sonner'
 
 
 import React from 'react'
+import { useDispatch } from 'react-redux'
 
 
 const Login = () => {
@@ -21,6 +24,8 @@ const Login = () => {
       role:"",
       
     });
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const changeEventHandler = (e)=>
     {
       setInput({...input,[e.target.name]:e.target.value});
@@ -33,6 +38,7 @@ const Login = () => {
        
       
         try{
+          dispatch(setLoading(true));
           const res = await axios.post(`${USER_API_END_POINT}/login`,input,{
             headers:{
               "Content-Type":"application/json"
@@ -52,6 +58,9 @@ const Login = () => {
         {
           console.log(error);
           toast.error(error.response.data.message);
+        }
+        finally{
+          dispatch(setLoading(false));
         }
     
       } 
