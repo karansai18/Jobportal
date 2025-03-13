@@ -12,6 +12,6 @@ import { singleUpload } from "../middleware/multer.js";
 router.route("/register").post(singleUpload,register);
 router.route("/login").post(login);
 router.route("/logout").get(logout);
-router.route("/profile/update").post(isAuthenticated,updateProfile);  // for this we need authentication . After authentication only we can updateprofile for that create use miidlewares genrally mw validtes,checks authentication go to isAuthenticated.js
+router.route("/profile/update").post(isAuthenticated,singleUpload,updateProfile);  // for this we need authentication . After authentication only we can updateprofile for that create use miidlewares genrally mw validtes,checks authentication go to isAuthenticated.js
 
 export default router;

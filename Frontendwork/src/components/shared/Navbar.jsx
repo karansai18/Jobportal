@@ -4,13 +4,23 @@ import { Popover,PopoverContent,PopoverTrigger} from '../ui/popover'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Button } from '../ui/button';
 import { LogOut, User2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import axios from 'axios';
+import { USER_API_END_POINT } from '../../axiosk/constant.js'
+import { setUser } from '@/redux/authSlice'
+import { toast } from 'sonner'
+
 
 // import { PopoverContent, PopoverTrigger} from '@radix-ui/react-popover'
 // import {Button } from '@radix-ui/react-button'
 
 const Navbar = () => {
-    const user=true;
+    const {user} =    useSelector(store=>store.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+     
   return (
     <div className='bg-white'>
         <div className='flex items-center justify-between h-16 mx-auto max-w-7xl '>
@@ -62,7 +72,7 @@ const Navbar = () => {
                                 <div className="flex flex-col text-gray-600">
                                     <div className="flex items-center gap-2 w-fit curser-pointer">
                                         <User2/>
-                                        <Button variant="link">View Profile</Button>
+                                        <Button variant="link"><Link to="/profile">View Profile</Link></Button>
                                     </div>
                                     <div className="flex items-center gap-2 w-fit curser-pointer">
                                         <LogOut/>

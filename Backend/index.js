@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 // const express = require('express')
 import cors from 'cors';
 // const cors = require('cors');
+
 import { config } from 'dotenv';
 import connectDB from './utils/db.js';
 import userroutes from "./routes/userroutes.js";
@@ -12,15 +13,17 @@ import jobroutes from './routes/jobrouter.js';
 import applicationroutes from './routes/applicationroutes.js';
 config({});   
 const app = express();
-// const corsOptions={
-//     origin:'http://localhost:5000',
-//     credentials:true
-// }
+const corsOptions = {
+    origin: function(origin, callback) {
+        callback(null, true);
+    },
+    credentials: true,
+};
 
 app.use(cookieParser());
 app.use(json());
 app.use(urlencoded({extended:true}));
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.get("/home",(req,res)=>{
     return res.status(200).json({

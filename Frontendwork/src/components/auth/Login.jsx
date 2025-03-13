@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'; 
 import { toast } from 'sonner'
-
+import {loading,setLoading} from '../../redux/authSlice'
 
 import React from 'react'
 import { useDispatch } from 'react-redux'
@@ -130,8 +130,12 @@ const Login = () => {
 
                    
                 </div>
+                
+                {
+                     loading ? <Button className="w-full my-4"> <Loader2 className='w-4 h-4 mr-2 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Login</Button>
+                }
  
-                <Button type="submit" className="w-full my-4">Login</Button>
+               
                 <span>Don't have an account? <Link to="/signup" className='text-blue-600'>Signup</Link></span>
             </form>
         </div>
