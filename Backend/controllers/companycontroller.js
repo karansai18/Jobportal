@@ -92,12 +92,14 @@ export const updateCompnay = async(req,res)=>{
 
 
         const {name,description,website,location}= req.body
-        const file = req.file
+        console.log(name,description,website,location);
+        const file = req.file;
 
          // space for cloudinary 
 
 
         const udpateData = {name,description,website,location};
+        console.log(name,description,website,location);
         const compnay = await Company.findByIdAndUpdate(req.params.id,udpateData,{new:true});
 
         if(!compnay)

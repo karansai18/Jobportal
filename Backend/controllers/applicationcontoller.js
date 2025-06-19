@@ -9,7 +9,7 @@ export const applyJob = async(req,res)=>{
             return res.status(400).json({
                 message:"Job id is required",
                 success:false
-            })
+            })  
         }  
 
         //check if the user has already applied for that job

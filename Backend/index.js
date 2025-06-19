@@ -19,6 +19,12 @@ const corsOptions = {
     },
     credentials: true,
 };
+// const corsOptions = {
+//     origin: ["http://localhost:5173"],  // Only allow frontend to access
+//     credentials: true,                  // Allow cookies
+// };
+app.use(cors(corsOptions));
+
 
 app.use(cookieParser());
 app.use(json());

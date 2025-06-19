@@ -68,7 +68,7 @@ const Profile = () => {
             </div>
             <UpdateProfile open={open} setOpen={setOpen}/>
         </div>
-    )
+    ) 
 }
 
 export default Profile

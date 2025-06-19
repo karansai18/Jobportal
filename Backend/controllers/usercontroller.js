@@ -1,7 +1,12 @@
 import { User } from "../models/usermodel.js";
+// import bcrypt from "bcryptjs";
 import bcrypt from "bcryptjs";
+
 import jwt  from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import getDatauri from "../utils/datauri.js";
+import cloudinary from '../utils/cloudinary.js'
+
 export const register = async (req,res)=>{
     try
     {
@@ -14,6 +19,17 @@ export const register = async (req,res)=>{
                 success:false
             })
         }
+
+
+
+
+        const file = req.file;
+
+        if (!file) {
+            return res.status(400).json({ message: "Profile photo is required", success: false });
+        }
+        const fileUri = getDatauri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
         let user = await User.findOne({email});
         if(user)
@@ -32,6 +48,9 @@ export const register = async (req,res)=>{
             phonenumber,
             password: hashedPassword,
             role,
+            profile:{
+                profilePhoto:cloudResponse.secure_url,
+            }
 
         });
         return res.status(201).json({
@@ -49,6 +68,7 @@ export const login = async (req,res)=>{
     try{
 
         const {email,password,role}= req.body;
+        console.log(req.body);
         if(!password || !email || !role)
         {
             return res.status(400).json({
@@ -74,7 +94,7 @@ export const login = async (req,res)=>{
         };
 
         // check role
-        if(!(role === user.role))
+        if((role !== user.role))
         {
             return res.status(400).json({
                 message:"Account doesnot exist with current role.",
@@ -105,7 +125,7 @@ export const login = async (req,res)=>{
         return res.status(200).cookie("token",token,{maxAge:1*24*60*60*1000,httpsOnly:true,sameSite:'strict'}).json({
             message:`Welcome Back ${user.fullname}`,
             user,   
-            sucess:true
+            success:true
         })
     
 
@@ -140,6 +160,8 @@ export const updateProfile = async(req,res)=>{
 
         let {fullname,email,phonenumber,bio,skills} = req.body;
         let file = req.file;
+        const fileUri = getDatauri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
        
         //cloudinary comes here
         let skillsArray
@@ -170,6 +192,11 @@ export const updateProfile = async(req,res)=>{
         if(skillsArray) user.profile.skills=skillsArray
 
         //resume comes here later
+        if(cloudResponse)
+        {
+            user.profile.resume= cloudRespoonse.secure_url; // save the cloudinary url
+            user.profile.resumeOriginalName = file.originalname //save the original file name 
+        }
 
 
 
