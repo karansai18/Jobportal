@@ -22,11 +22,11 @@ const Job = ({job}) => {
        
         <div className='flex-col items-center gap-2 my-2'>
             <Avatar>
-               <AvatarImage src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBobUVyPC8AItHWrndN1zMfjljkzpkEMricw&s' className='w-auto h-10 mt-4 ml-5' />
+               <AvatarImage src={job?.company?.logo} className='w-auto h-10 mt-4 ml-5' />
             </Avatar>
             <div>
                 <h1 className='text-lg font-medium'>
-                   {job?.company}
+                   {job?.company?.name ?? job?.company}
                 </h1>
                 <p className='text-sm text-gray-500'>India</p>
             </div>

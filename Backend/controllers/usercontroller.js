@@ -1,11 +1,9 @@
 import { User } from "../models/usermodel.js";
-// import bcrypt from "bcryptjs";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import getDatauri from "../utils/dataUri.js";
+import cloudinary from "../utils/cloudinary.js";
 
-import jwt  from "jsonwebtoken";
-import cookieParser from "cookie-parser";
-import getDatauri from "../utils/datauri.js";
-import cloudinary from '../utils/cloudinary.js'
 
 export const register = async (req,res)=>{
     try
@@ -122,11 +120,19 @@ export const login = async (req,res)=>{
 
         // store the cookies in cookies-> token will be stored in cookie
         // status-200 because successfully logedin
-        return res.status(200).cookie("token",token,{maxAge:1*24*60*60*1000,httpsOnly:true,sameSite:'strict'}).json({
-            message:`Welcome Back ${user.fullname}`,
-            user,   
-            success:true
-        })
+         return res
+    .status(200)
+    .cookie("token", token, {
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production", // Only in prod
+    })
+    .json({
+      success: true,
+      message: "Logged in successfully",
+      user,
+    });
     
 
 
@@ -194,7 +200,7 @@ export const updateProfile = async(req,res)=>{
         //resume comes here later
         if(cloudResponse)
         {
-            user.profile.resume= cloudRespoonse.secure_url; // save the cloudinary url
+            user.profile.resume= cloudResponse.secure_url; // save the cloudinary url
             user.profile.resumeOriginalName = file.originalname //save the original file name 
         }
 
@@ -230,6 +236,3 @@ export const updateProfile = async(req,res)=>{
         console.log(error);
     }
 }
-
-
-

@@ -2,11 +2,11 @@ import { setAllJobs } from '../redux/JobSlice'
 import { JOB_API_END_POINT } from '../axiosk/constant.js'
 import axios from 'axios'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const GetAllJobs = () => {
     const dispatch = useDispatch();
-    const {searchedQuery} = useSelector(store=>store.job);
+  
     useEffect(()=>{
         const fetchAllJobs = async () => {
             try 

@@ -5,7 +5,7 @@ const LatestJobCards = ({job}) => {
   return (
     <div className='p-5 bg-white border border-gray-100 rounded-md shadow-xl cursor-pointer'>
         <div>
-          <h1 className='text-lg font-medium'>{job?.company}</h1>
+          <h1 className='text-lg font-medium'>{job?.company?.name ?? job?.company}</h1>
           <p className='text-sm text-gray-500'>India</p>
         </div>
         <div>

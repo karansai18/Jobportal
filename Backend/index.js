@@ -11,25 +11,33 @@ import userroutes from "./routes/userroutes.js";
 import companyroutes from './routes/companyroutes.js'
 import jobroutes from './routes/jobrouter.js';
 import applicationroutes from './routes/applicationroutes.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
 config({});   
 const app = express();
-const corsOptions = {
-    origin: function(origin, callback) {
-        callback(null, true);
-    },
-    credentials: true,
-};
+// const corsOptions = {
+//     origin: function(origin, callback) {
+//         callback(null, true);
+//     },
+//     credentials: true,
+// };
+// app.use(cors(corsOptions));
 // const corsOptions = {
 //     origin: ["http://localhost:5173"],  // Only allow frontend to access
 //     credentials: true,                  // Allow cookies
 // };
-app.use(cors(corsOptions));
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 
 
 app.use(cookieParser());
 app.use(json());
 app.use(urlencoded({extended:true}));
-app.use(cors(corsOptions));
+
 
 app.get("/home",(req,res)=>{
     return res.status(200).json({
@@ -45,7 +53,7 @@ app.get("/home",(req,res)=>{
 
 
 // const port = 3000;
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 4501;
 app.use("/api/v1/user",userroutes);
 app.use("/api/v1/company",companyroutes);
 app.use("/api/v1/job",jobroutes);

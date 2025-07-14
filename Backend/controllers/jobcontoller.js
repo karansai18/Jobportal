@@ -116,26 +116,57 @@ export const getJobById = async(req,res)=>{
 
 // admin kitne jobs create kara
 
-export const getadmincreatedjobs = async(req,res)=>{
-    try{
+// export const getadmincreatedjobs = async(req,res)=>{
+//     try{
+//         const adminId = req.id;
+//         const jobs = await Job.find({created_by:adminId}).populate({
+//             path:'company',created:-1
+//         })
+//         // if there are two admins for a company if two of them created some jobs if they want how jobs there were created so two of them will have diff userId by using that they can find
+//         if(!jobs)
+//         {
+//                 return res.status(404).json({
+//                     message:"Jobs not found",
+//                     success:false
+//                 })
+//         }   
+//         return res.status(200).json({
+//             jobs,
+//             success:true
+//         })
+
+//     }
+//     catch(error)
+//     {
+//         console.log(error);
+//     }
+// }
+
+
+export const getadmincreatedjobs = async (req, res) => {
+    try {
         const adminId = req.id;
-        const jobs = await Job.find({created_by:adminId})
-        // if there are two admins for a company if two of them created some jobs if they want how jobs there were created so two of them will have diff userId by using that they can find
-        if(!jobs)
-        {
-                return res.status(404).json({
-                    message:"Jobs not found",
-                    success:false
-                })
+
+        const jobs = await Job.find({ created_by: adminId })
+            .sort({ createdAt: -1 }) // Sorting jobs by newest
+            .populate('company'); // Populating company details
+
+        if (!jobs || jobs.length === 0) {
+            return res.status(404).json({
+                message: "Jobs not found",
+                success: false
+            });
         }
+
         return res.status(200).json({
             jobs,
-            success:true
-        })
-
+            success: true
+        });
+    } catch (error) {
+        console.error("Error in getadmincreatedjobs:", error);
+        res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
+};
