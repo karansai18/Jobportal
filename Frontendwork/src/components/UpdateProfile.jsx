@@ -17,7 +17,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     const [input, setInput] = useState({
         fullname: user?.fullname || "",
         email: user?.email || "",
-        phoneNumber: user?.phoneNumber || "",
+        phonenumber: user?.phonenumber || "",
         bio: user?.profile?.bio || "",
         skills: user?.profile?.skills?.map(skill => skill) || "",
         file: user?.profile?.resume || ""
@@ -38,7 +38,7 @@ const UpdateProfile = ({ open, setOpen }) => {
         const formData = new FormData();
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
-        formData.append("phoneNumber", input.phoneNumber);
+        formData.append("phoneNumber", input.phonenumber);
         formData.append("bio", input.bio);
         formData.append("skills", input.skills);
         if (input.file) {
@@ -103,8 +103,8 @@ const UpdateProfile = ({ open, setOpen }) => {
                                 <Label htmlFor="number" className="text-right">Number</Label>
                                 <Input
                                     id="number"
-                                    name="number"
-                                    value={input.phoneNumber}
+                                    name="phonenumber"
+                                    value={input.phonenumber}
                                     onChange={changeEventHandler}
                                     className="col-span-3"
                                 />

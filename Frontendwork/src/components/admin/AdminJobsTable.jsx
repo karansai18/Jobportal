@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Edit2, MoreHorizontal } from 'lucide-react'
+import { Edit2, Eye, MoreHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -51,6 +51,10 @@ const AdminJobsTable = () => {
             <div onClick={() => navigate(`/admin/companies/${job._id}`)} className='flex items-center gap-2 cursor-pointer w-fit'>
               <Edit2 className='w-4' />
               <span>Edit</span>
+            </div>
+            <div onClick={()=>navigate(`/admin/jobs/${job._id}/applicants`)}className='flex items-center gap-2 mt-2 cursor-pointer w-fit' >
+              <Eye className='w-4'/>
+              <span>Applicants</span> 
             </div>
           </PopoverContent>
         </Popover>
