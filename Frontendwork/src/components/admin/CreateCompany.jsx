@@ -13,11 +13,15 @@ const CreateCompany = () => {
  
 
     const navigate = useNavigate();
-    const [companyName, setCompanyName] = useState();
+    const [companyName, setCompanyName] = useState('');
     const dispatch = useDispatch();
     const registerNewCompany = async () => {
         try 
         {
+//             if (!companyName.trim()) {
+//   toast.error("Company name is required");
+//   return;
+// }
             const res = await axios.post(`${COMPANY_API_END_POINT}/register`, {companyName}, {
                 headers:{
                     'Content-Type':'application/json'

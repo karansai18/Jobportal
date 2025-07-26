@@ -43,33 +43,41 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filterCompany?.map((company) => (
-            <TableRow key={company._id}>
-              <TableCell>
-                <Avatar>
-                  <AvatarImage src={company.logo} />
-                </Avatar>
-              </TableCell>
-              <TableCell>{company?.name}</TableCell>
-              <TableCell>{company?.createdAt?.split('T')[0] ?? 'N/A'}</TableCell>
-              <TableCell className="text-right cursor-pointer">
-                <Popover>
-                  <PopoverTrigger>
-                    <MoreHorizontal />
-                  </PopoverTrigger>
-                  <PopoverContent className="w-32">
-                    <div
-                      onClick={() => navigate(`/admin/companies/${company._id}`)}
-                      className="flex items-center gap-2 cursor-pointer w-fit"
-                    >
-                      <Edit2 className="w-4" />
-                      <span>Edit</span>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </TableCell>
-            </TableRow>
-          ))}
+          {filterCompany?.map((company) => {
+            console.log('company:', company);
+            console.log('company.name:', company.name, typeof company.name);
+            return (
+              <TableRow key={company._id}>
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage src={company.logo} />
+                  </Avatar>
+                </TableCell>
+                <TableCell>{
+                  typeof company?.name === 'string'
+                    ? company.name
+                    : JSON.stringify(company.name)
+                }</TableCell>
+                <TableCell>{company?.createdAt?.split('T')[0] ?? 'N/A'}</TableCell>
+                <TableCell className="text-right cursor-pointer">
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreHorizontal />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-32">
+                      <div
+                        onClick={() => navigate(`/admin/companies/${company._id}`)}
+                        className="flex items-center gap-2 cursor-pointer w-fit"
+                      >
+                        <Edit2 className="w-4" />
+                        <span>Edit</span>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>

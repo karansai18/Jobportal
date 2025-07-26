@@ -8,11 +8,14 @@ import cors from 'cors';
 import { config } from 'dotenv';
 import connectDB from './utils/db.js';
 import userroutes from "./routes/userroutes.js";
-import companyroutes from './routes/companyroutes.js'
+import companyroutes from './routes/companyroutes.js';
 import jobroutes from './routes/jobrouter.js';
 import applicationroutes from './routes/applicationroutes.js';
 import dotenv from 'dotenv';
 dotenv.config();
+
+
+
 
 config({});   
 const app = express();
@@ -27,6 +30,16 @@ const app = express();
 //     origin: ["http://localhost:5173"],  // Only allow frontend to access
 //     credentials: true,                  // Allow cookies
 // };
+
+
+//  Example Use Case:
+// You're building a MERN app:
+
+// Frontend: localhost:3000
+
+// Backend API: localhost:5000
+
+// If you make a fetch or axios request from 3000 to 5000, it’s a cross-origin request. Without CORS enabled on the backend, the browser will block the request.
 
 app.use(cors({
   origin: 'http://localhost:5173',

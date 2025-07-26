@@ -9,7 +9,7 @@ import multer from "multer";
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-export const singleUpload = (req, res, next) => {
+export const     singleUpload = (req, res, next) => {
     upload.single("file")(req, res, (err) => {
         if (err) {
             console.log("Multer error:", err);
